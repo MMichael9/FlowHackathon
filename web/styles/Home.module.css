@@ -1,0 +1,12 @@
+.container {
+    background-color: #21232e;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.signIn {
+  font-size: 20px;
+  padding-top: 900px;
+}
