@@ -1,4 +1,9 @@
 .container {
-    background-color: #21232e;
+    background-color: black;
     min-height: 100vh;
+    color: white;
+}
+
+.stats {
+    margin-left: 20px;
 }

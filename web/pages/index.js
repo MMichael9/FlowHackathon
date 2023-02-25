@@ -2,6 +2,8 @@ import Head from 'next/head'
 import Navbar from "../components/Navbar";
 import styles from '@/styles/Home.module.css'
 import { useAuth } from "../contexts/AuthContext";
+import { getMomentMetadata, getMoments } from "../flow/scripts";
+import {useEffect, useState} from "react";
 
 export default function Home() {
 

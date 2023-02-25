@@ -13,6 +13,7 @@ export default function Navbar() {
       <Link href="/">Home</Link>
       <Link href="/team">Manage Team</Link>
       <Link href="/league">Join Leagues</Link>
+      <Link href="/leaderboard">Leaderboard</Link>
     </div>
   );
 }
