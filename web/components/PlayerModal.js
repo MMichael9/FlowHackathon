@@ -22,8 +22,6 @@ function MyModal(props) {
             const LastTen = await axios.get(`http://localhost:8000/getLastTenGames/${response.data.id}`);
             statsArray.push(LastTen.data)
 
-
-            console.log(statsArray)
             setPlayerStats(statsArray);
           } catch (error) {
             console.error(error);
@@ -36,7 +34,7 @@ function MyModal(props) {
 
   return (
     <div>
-      <h2>Modal</h2>
+      <h2>Stats For...</h2>
       <p>{props.value}</p>
       {playerStats ? (
         <div>

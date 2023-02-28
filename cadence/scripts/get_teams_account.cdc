@@ -12,7 +12,7 @@ pub struct TeamMetadata {
     }
 }
 
-// Get tweets owned by an account
+// Get teams owned by an account
 pub fun main(account: Address): [TeamMetadata] {
     // Get the public account object for account
     let tweetOwner = getAccount(account)
@@ -24,16 +24,16 @@ pub fun main(account: Address): [TeamMetadata] {
     let publicRef = capability.borrow()
             ?? panic("Could not borrow public reference")
 
-    // get list of tweet IDs
-    let tweetIDs = publicRef.getIDs()
+    // get list of team IDs
+    let teamIDs = publicRef.getIDs()
 
-    let tweets: [TeamMetadata] = []
+    let teams: [TeamMetadata] = []
 
-    for tweetID in tweetIDs {
-        let tweet = publicRef.borrowTeam(id: tweetID) ?? panic("this tweet does not exist")
-        let metadata = TeamMetadata(id: tweet.id, name: tweet.name, players: tweet.players)
-        tweets.append(metadata)
+    for teamID in teamIDs {
+        let team = publicRef.borrowTeam(id: teamID) ?? panic("this tweet does not exist")
+        let metadata = TeamMetadata(id: team.id, name: team.name, players: team.players)
+        teams.append(metadata)
     }
 
-    return tweets
+    return teams
 }

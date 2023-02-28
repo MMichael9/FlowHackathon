@@ -40,10 +40,10 @@ pub contract NetProfits {
         // The unique ID that differentiates each Team
         pub let id: UInt32
         pub let name: String
-        pub var players: String
+        pub var players: [String; 5]
 
         // Initialize both fields in the init function
-        init(name: String, players: String) {
+        init(name: String, players: [String; 5]) {
           self.id = NetProfits.nextTeamId
           self.name = name
           self.players = players
@@ -51,15 +51,13 @@ pub contract NetProfits {
           NetProfits.nextTeamId = self.id + 1 as UInt32
         }
 
-        access(contract) fun modifyTeam(players: String) {
+        access(contract) fun modifyTeam(players: [String; 5]) {
             self.players = players
         }
-
-
     }
 
     // Function to create a new Team
-    pub fun createTeam(name: String, players: String): @Team {
+    pub fun createTeam(name: String, players: [String; 5]): @Team {
         return <-create Team(name: name, players: players)
     }
 
@@ -98,7 +96,7 @@ pub contract NetProfits {
             return nil
         }
 
-        pub fun modifyTeam(id: UInt32, players: String): Bool {
+        pub fun modifyTeam(id: UInt32, players: [String; 5]): Bool {
             if let team = &self.teams[id] as &NetProfits.Team? {
                 team.modifyTeam(players: players)
             } else {
@@ -143,7 +141,7 @@ pub contract NetProfits {
         }
     }
 
-    // League
+    // League Resource
     //
     //
     //
@@ -152,7 +150,7 @@ pub contract NetProfits {
         pub let leagueName: String
         pub let createdTime: UFix64
         pub var members: [String]
-        pub var membersMap: {UInt32: [String]}
+        pub var membersMap: [UInt32]
         pub var active: Bool
 
         init(name: String) {
@@ -170,10 +168,14 @@ pub contract NetProfits {
             NetProfits.leagueIdByName[name] = self.leagueId
         }
 
-        pub fun joinLeague(name:String, ) {
+        pub fun joinLeague(name:String) {
             // check if name is already in league and if league is active
             // if no add them to member array, otherwise dont
             self.members.append(name)
+        }
+
+        pub fun joinLeagueTest(teamId: UInt32) {
+            self.membersMap.append(teamId)
         }
     }
 
@@ -211,6 +213,10 @@ pub contract NetProfits {
         return NetProfits.leagues[leagueId]?.members
     }
 
+
+    // Admin Resource
+    // 
+    // Contract owner with access to special functions
     pub resource Admin {
 
         pub fun createLeague(name: String): UInt32 {
@@ -235,3 +241,4 @@ pub contract NetProfits {
         }
     }
 }
+ 

@@ -1,13 +1,11 @@
 import NetProfits from "../contracts/NetProfits.cdc"
 
-// This transaction is for the admin to create a new set resource
-// and store it in the top shot smart contract
-// Parameters:
+// Create a new league resource
 //
-// setName: the name of a new Set to be created
+// leagueName: name of new league to be created
 transaction(leagueName: String) {
     
-    // Local variable for the topshot Admin object
+    // variable for the NetProfits Admin
     let adminRef: &NetProfits.Admin
     let currLeagueId: UInt32
 
@@ -21,7 +19,7 @@ transaction(leagueName: String) {
 
     execute {
         
-        // Create a set with the specified name
+        // Create League Resource
         self.adminRef.createLeague(name: leagueName)
         log(NetProfits.nextLeagueId)
         log(NetProfits.getAllLeagueNames())

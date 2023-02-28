@@ -1,5 +1,22 @@
 import * as fcl from "@onflow/fcl";
 
+// export async function checkIsInitialized(addr) {
+//     return fcl.query({
+//       cadence: IS_INITIALIZED,
+//       args: (arg, t) => [arg(addr, t.Address)],
+//     });
+//   }
+  
+//   const IS_INITIALIZED = `
+//   import NetProfits from 0xNetProfits
+  
+//   pub fun main(account: Address): Bool {
+//       let capability = getAccount(account).getCapability<&Domains.Collection{NonFungibleToken.CollectionPublic, Domains.CollectionPublic}>(Domains.DomainsPublicPath)
+//       return capability.check()
+//   }
+//   `;
+
+
 export async function getMoments(addr) {
     return fcl.query({
         cadence: GET_MOMENTS,
@@ -62,13 +79,61 @@ const GET_LEAGUES = `
 import NetProfits from 0xNetProfits
 
 pub fun main(): [NetProfits.LeagueData] {
-    let sets: [NetProfits.LeagueData] = []
+    let leagues: [NetProfits.LeagueData] = []
     var id: UInt32 = 1
-    // Note < , as nextSetID has not yet been used
     while id < NetProfits.nextLeagueId {
-        sets.append(NetProfits.getLeagueData(id: id))
+        leagues.append(NetProfits.getLeagueData(id: id))
         id = id + 1
     }
-    return sets
+    return leagues
 }
 `;
+
+
+export async function getTeams(addr) {
+    return fcl.query({
+        cadence: GET_TEAMS,
+        args: (arg, t) => [arg(addr, t.Address)],
+    })
+}
+
+const GET_TEAMS = `
+import NetProfits from 0xNetProfits
+
+pub struct TeamMetadata {
+    pub let id: UInt32
+    pub let name: String
+    pub let players: [String; 5] 
+
+    init(id: UInt32, name: String, players: [String; 5]) {
+        self.id = id
+        self.name = name
+        self.players = players
+    }
+}
+
+// Get teams owned by an account
+pub fun main(account: Address): [TeamMetadata] {
+    // Get the public account object for account
+    let tweetOwner = getAccount(account)
+
+    // Find the public capability for their Collection
+    let capability = tweetOwner.getCapability<&{NetProfits.CollectionPublic}>(NetProfits.TeamCollectionPublicPath)
+
+    // borrow a reference from the capability
+    let publicRef = capability.borrow()
+            ?? panic("Could not borrow public reference")
+
+    // get list of team IDs
+    let teamIDs = publicRef.getIDs()
+
+    let teams: [TeamMetadata] = []
+
+    for teamID in teamIDs {
+        let team = publicRef.borrowTeam(id: teamID) ?? panic("this tweet does not exist")
+        let metadata = TeamMetadata(id: team.id, name: team.name, players: team.players)
+        teams.append(metadata)
+    }
+
+    return teams
+}`

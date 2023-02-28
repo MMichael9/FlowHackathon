@@ -1,3 +1,4 @@
+import * as fcl from "@onflow/fcl";
 // Imports
 import Head from "next/head";
 import Navbar from "../components/Navbar";
@@ -5,6 +6,7 @@ import MyModal from "../components/PlayerModal"
 import styles from "../styles/Team.module.css";
 import { useAuth } from "../contexts/AuthContext";
 import { getMomentMetadata, getMoments } from "../flow/scripts";
+import { createTeam } from "../flow/transactions"
 import {useEffect, useState} from "react";
 import jsonObj from "../static/players.json"
 
@@ -15,6 +17,8 @@ export default function Team() {
     const names = []
 
     const [team, setTeam] = useState([])
+
+    const [teamName, setTeamName] = useState(null)
 
     const [showModal, setShowModal] = useState(false);
     const [modalValue, setModalValue] = useState(null);
@@ -40,6 +44,32 @@ export default function Team() {
     const removeFromTeam = (value) => {
       setTeam(team.filter((player) => player !== value));
     }
+
+    async function submitTeam() {
+
+      if (teamName == null || teamName.length < 3) {
+        alert("Please Enter a Team Name")
+        return;
+      }
+
+      if (team.length < 5) {
+        alert("Please Pick 5 Players")
+        return;
+      }
+
+      console.log(teamName)
+      console.log(team)
+
+      try {
+        const txId = await createTeam(teamName, team);
+        await fcl.tx(txId).onceSealed();
+        console.log(txId)
+        alert('Transaction Id: ' + txId + '\n\nTeam Succesfully Created! Go to the View Team tab!')
+      } catch (error) {
+        alert("ERROR!")
+        console.error(error.message)
+      }
+    }
     
 
     // Function to fetch the domains owned by the currentUser
@@ -62,10 +92,6 @@ export default function Team() {
       }
     }
 
-    async function getStats(playerName) {
-        console.log(playerName)
-    }
-
     return (
         <div className={styles.container}>
             <Head>
@@ -75,29 +101,30 @@ export default function Team() {
             </Head>
 
             <Navbar />
-            <div>
-                <button onClick={fetchMoments}>Load Team</button>
-                {showModal && <MyModal value={modalValue} onClose={() => setShowModal(false)} />}
+            <button onClick={fetchMoments}>Load Collection</button>
+            {showModal && <MyModal value={modalValue} onClose={() => setShowModal(false)} />}
+            <div className={styles.playerList}>
                 {Ids.map(id => (
-                    <div key={id}>
+                    <div key={id} className={styles.playerListChild}>
                     <p>{id}</p>
-                    <button>Add Player</button>
-                    <button onClick={() => addToTeam(id)}>Add Player Test</button>
-                    <button className={styles.stats} onClick={() => handleClick(id)}>Open Modal</button>
+                    <button className={styles.stats} onClick={() => addToTeam(id)}>Add</button>
+                    <button className={styles.stats} onClick={() => handleClick(id)}>View Stats</button>
                     </div>
                 ))}
             </div>
-            <div>
-              <h2>Selected Players</h2>
+            <p><b>Selected Players</b></p>
+            <div className={styles.playerList}>
               {team.map((player) => (
-                      <div key={player}>
+                      <div key={player} className={styles.playerListChild}>
                         <p>{player}</p>
                         <button onClick={() => removeFromTeam(player)}>Remove</button>
                       </div>
                 ))}
             </div>
-            <div>
-              <button>Submit</button>
+            <div className={styles.submitTeam}>
+              <label for="my-input">Team Name:</label>
+              <input type="text" id="my-input" name="my-input" onChange={(e) => setTeamName(e.target.value)} />
+              <button onClick={submitTeam}>Submit</button>
             </div>
         </div>
     )

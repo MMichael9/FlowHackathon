@@ -3,8 +3,16 @@
     min-height: 100vh;
 }
 
-.leagueContainer {
-    background-color: white;
+.leagueList {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+.leagueListChild {
+    margin-right: 30px;
+    color: white;
 }
 
 .createLeagueContainer {

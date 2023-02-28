@@ -3,6 +3,7 @@ import * as fcl from "@onflow/fcl";
 import Head from "next/head";
 import Navbar from "../components/Navbar";
 import styles from "../styles/League.module.css";
+import TeamSelectModal from "../components/TeamSelectModal"
 
 import { useAuth } from "../contexts/AuthContext";
 import { getLeagues, createLeagues } from "../flow/scripts";
@@ -12,8 +13,17 @@ import {useEffect, useState} from "react";
 export default function League() {
 
     const { currentUser, logOut, logIn } = useAuth();
-
+    const [leagueName, setLeagueName] = useState(null)
     const [leagues, setLeagues] = useState([]);
+
+    const [showModal, setShowModal] = useState(false);
+    const [modalValue, setModalValue] = useState(null);
+
+    const handleClick = (value) => {
+      console.log(value);
+      setModalValue(value);
+      setShowModal(true);
+    };
 
     // Function to fetch the domains owned by the currentUser
     async function fetchLeagues() {
@@ -30,15 +40,16 @@ export default function League() {
 
     async function makeLeague() {
       try {
-        console.log('create league')
+        console.log('creating league: ', leagueName)
 
-        let name = "League 3"
-
-        const txId = await createLeague(name);
+        const txId = await createLeague(leagueName);
         await fcl.tx(txId).onceSealed();
+
         console.log(txId)
+        alert('Transaction Id: ' + txId + '\n\nLeague Succesfully Created! Go Join a League!')
       } catch (error) {
-        console.log(error.message)
+        alert("ERROR! You might not be the admin!")
+        console.error(error.message)
       }
     }
 
@@ -57,14 +68,19 @@ export default function League() {
 
             <Navbar />
             <button onClick={fetchLeagues}>Load Leagues</button>
-            {leagues.map(league => (
-                    <div key={league.leagueId} className={styles.leagueContainer}>
-                      <h2>{league.leagueId}</h2>
-                      <p>{league.leagueName}</p>
-                      <button onClick={() => joinLeague(league.leagueId)}>Join League</button>
-                    </div>
-            ))}
+            {showModal && <TeamSelectModal value={modalValue} onClose={() => setShowModal(false)} />}
+            <div className={styles.leagueList}>
+              {leagues.map(league => (
+                      <div key={league.leagueId} className={styles.leagueListChild}>
+                        <p>League Id: {league.leagueId}</p>
+                        <p>Name: {league.leagueName}</p>
+                        <p># of Participants {league.members.length}</p>
+                        <button onClick={() => handleClick(league.leagueId)}>Join League</button>
+                      </div>
+              ))}
+            </div>
             <div className={styles.createLeagueContainer}>
+              <input type="text" id="my-input" name="my-input" onChange={(e) => setLeagueName(e.target.value)} />
               <button onClick={makeLeague}>Create League</button>
             </div>
         </div>

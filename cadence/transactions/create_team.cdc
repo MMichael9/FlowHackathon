@@ -1,10 +1,10 @@
-// Create new Tweet
+// Create new Team
 
 import NetProfits from "../contracts/NetProfits.cdc"
 
-// This transaction creates a new tweet with an argument
+// This transaction creates a new team
 transaction (name: String, players: String) {
-    // Let's check that the account has a collection
+    // check if account has a collection
     prepare(acct: AuthAccount) {
         if acct.borrow<&NetProfits.Collection>(from: NetProfits.TeamCollectionStoragePath) != nil {
             log("Collection exists!")
