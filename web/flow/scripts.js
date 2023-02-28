@@ -51,3 +51,24 @@ pub fun main(account: Address, id: UInt64): {String: String} {
     return metadata
 }
 `;
+
+export async function getLeagues() {
+    return fcl.query({
+        cadence: GET_LEAGUES
+    })
+}
+
+const GET_LEAGUES = `
+import NetProfits from 0xNetProfits
+
+pub fun main(): [NetProfits.LeagueData] {
+    let sets: [NetProfits.LeagueData] = []
+    var id: UInt32 = 1
+    // Note < , as nextSetID has not yet been used
+    while id < NetProfits.nextLeagueId {
+        sets.append(NetProfits.getLeagueData(id: id))
+        id = id + 1
+    }
+    return sets
+}
+`;

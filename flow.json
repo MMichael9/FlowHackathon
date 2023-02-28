@@ -1,7 +1,7 @@
 {
 	"contracts": {
-		"NetProfits": "cadence/contracts/NetProfits.cdc",
-		"Person": "cadence/contracts/Person.cdc"
+		"NetProfits": "./cadence/contracts/NetProfits.cdc",
+		"Person": "./cadence/contracts/Person.cdc"
 	},
 	"networks": {
 		"emulator": "127.0.0.1:3569",
@@ -20,10 +20,10 @@
 	},
 	"deployments": {
 		"emulator": {
-			"default": [
-				"NetProfits",
-				"Person"
+			"emulator-account": [
+				"NetProfits"
 			]
 		}
 	}
 }
+ 
