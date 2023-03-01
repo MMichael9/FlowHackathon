@@ -11,9 +11,14 @@ export default function League() {
                 <meta name="description" content="Fantasy_MyLeagues" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-
             <Navbar />
-            <p>Leagues</p>
+                <div>
+                <p>Leagues</p>
+                </div>
+                <div>My Leagues</div>
+                <div></div>
+            
         </div>
     )
+ 
 }

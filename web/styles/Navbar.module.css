@@ -3,10 +3,10 @@
     justify-content: center;
     column-gap: 10em;
     align-items: center;
-    background-color: #21232e;
+    background-color: #000000;
     padding: 1em 0 1em 0;
     font-size: 16px;
-    border-bottom: 2px solid #098faa;
+    border-bottom: 2px solid #907a2e;
   }
   
   .navbar a {

@@ -12,7 +12,7 @@ function MyModal(props) {
           try {
             var statsArray = []
             const response = await axios.get(`http://localhost:8000/playerName/${props.value}`);
-
+            console.log(response)
 
             const statsReq = await axios.get(`http://localhost:8000/getSeasonStats/${response.data.id}`);
             statsArray.push(statsReq.data)

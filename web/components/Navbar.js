@@ -11,9 +11,11 @@ export default function Navbar() {
   return (
     <div className={styles.navbar}>
       <Link href="/">Home</Link>
-      <Link href="/team">Manage Team</Link>
-      <Link href="/league">Join Leagues</Link>
+      <Link href="/joinleague">Join Leagues</Link>
+      <Link href="/team">Select Team</Link>
       <Link href="/leaderboard">Leaderboard</Link>
+      <Link href="/myteamv1">My Team</Link>
+      <Link href="/league1">League</Link>
     </div>
   );
 }
