@@ -20,15 +20,35 @@
       "playerName": "Brook Lopez"
     },
     {
-      "nftId": 123123123,
-      "playerName": "LeBron James"
+      "nftId": 5748804,
+      "playerName": "James Wiseman"
     },
     {
-      "nftId": 23123213,
+      "nftId": 3436840,
+      "playerName": "RJ Barrett"
+    },
+    {
+      "nftId": 1086415,
+      "playerName": "Markelle Fultz"
+    },
+    {
+      "nftId": 7138246,
+      "playerName": "Ben Simmons"
+    },
+    {
+      "nftId": 1470395,
       "playerName": "Pascal Siakam"
     },
     {
-      "nftId": 123412312,
-      "playerName": "Anthony Edwards"
+      "nftId": 5193792,
+      "playerName": "Theo Maledon"
+    },
+    {
+      "nftId": 1303379,
+      "playerName": "Marcus Smart"
+    },
+    {
+      "nftId": 8964304,
+      "playerName": "Cameron Payne"
     }
   ]

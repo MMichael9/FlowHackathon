@@ -1,7 +1,6 @@
 {
 	"contracts": {
-		"NetProfits": "./cadence/contracts/NetProfits.cdc",
-		"Person": "./cadence/contracts/Person.cdc"
+		"NetProfits": "./cadence/contracts/NetProfits.cdc"
 	},
 	"networks": {
 		"emulator": "127.0.0.1:3569",
@@ -9,13 +8,16 @@
 		"testnet": "access.devnet.nodes.onflow.org:9000"
 	},
 	"accounts": {
-		"default": {
-			"address": "fd43f9148d4b725d",
-			"key": "b3c10c6e797f89e82f2c28832d33520bcb199d0da1225eb25c898f572cf26203"
-		},
 		"emulator-account": {
 			"address": "f8d6e0586b0a20c7",
 			"key": "6d12eebfef9866c9b6fa92b97c6e705c26a1785b1e7944da701fc545a51d4673"
+		},
+		"test": {
+			"address": "39b08d733644d9cd",
+			"key": {
+				"type": "file",
+				"location": "test.pkey"
+			}
 		}
 	},
 	"deployments": {
@@ -23,7 +25,11 @@
 			"emulator-account": [
 				"NetProfits"
 			]
+		},
+		"testnet": {
+			"test": [
+				"NetProfits"
+			]
 		}
 	}
 }
- 

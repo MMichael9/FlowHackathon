@@ -46,15 +46,11 @@ export default function League() {
         await fcl.tx(txId).onceSealed();
 
         console.log(txId)
-        alert('Transaction Id: ' + txId + '\n\nLeague Succesfully Created! Go Join a League!')
+        alert('Transaction Id: ' + txId + '\n\nLeague Succesfully Created! Teams Can Now Join!')
       } catch (error) {
         alert("ERROR! You might not be the admin!")
         console.error(error.message)
       }
-    }
-
-    async function joinLeague(leagueId) {
-      console.log(leagueId)
     }
 
 
@@ -74,7 +70,7 @@ export default function League() {
                       <div key={league.leagueId} className={styles.leagueListChild}>
                         <p>League Id: {league.leagueId}</p>
                         <p>Name: {league.leagueName}</p>
-                        <p># of Participants {league.members.length}</p>
+                        <p># of Participants {league.teamIdList.length}</p>
                         <button onClick={() => handleClick(league.leagueId)}>Join League</button>
                       </div>
               ))}

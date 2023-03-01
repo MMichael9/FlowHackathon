@@ -1,6 +1,6 @@
 import NetProfits from "../contracts/NetProfits.cdc"
 
-transaction(id: UInt32, players: String) {
+transaction(id: UInt32, players: [String; 5]) {
 
     let collection: &NetProfits.Collection?
 

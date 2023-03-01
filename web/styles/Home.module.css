@@ -1,12 +1,64 @@
 .container {
-    background-color: #21232e;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-image: url("../public/netprofits.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+
+  background-attachment: fixed;
 }
 
-.signIn {
-  font-size: 20px;
-  padding-top: 900px;
+.title {
+  font-size: 52px;
+  margin-bottom: 32px;
+}
+
+.button {
+  padding: 16px 32px;
+  border-radius: 4px;
+  font-size: 24px;
+  font-weight: bold;
+  background-color: #0055FF;
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #0044CC;
+}
+
+.subtitle {
+  margin-top: 16px;
+}
+
+.grid {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 64px;
+  width: 100%;
+}
+
+.card {
+  text-align: justify;
+}
+
+.card h2 {
+  font-size: 30px;
+}
+
+.card p {
+  font-size: 18px;
+}
+
+.footer {
+  margin-top: auto;
+  text-align: center;
+  background-color: #333333;
+  color: #FFFFFF;
+  padding: 20px;
 }

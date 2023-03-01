@@ -3,7 +3,7 @@
 import NetProfits from "../contracts/NetProfits.cdc"
 
 // This transaction creates a new team
-transaction (name: String, players: String) {
+transaction (name: String, players: [String; 5]) {
     // check if account has a collection
     prepare(acct: AuthAccount) {
         if acct.borrow<&NetProfits.Collection>(from: NetProfits.TeamCollectionStoragePath) != nil {

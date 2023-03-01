@@ -14,6 +14,7 @@ export default function Navbar() {
       <Link href="/team">Create Team</Link>
       <Link href="/viewteam">View Team</Link>
       <Link href="/league">Join Leagues</Link>
+      <Link href="/viewleague">View Leagues</Link>
     </div>
   );
 }

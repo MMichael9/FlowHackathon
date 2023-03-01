@@ -1,19 +1,21 @@
-.teamView {
+.container {
     background-color: #21232e;
     min-height: 100vh;
+}
+
+.leagueDataButton {
+    margin-bottom: 20px;
+}
+
+.leagueDataDisplay {
     color: white;
 }
 
-.teamButton {
-    margin-bottom: 50px;
-}
-
-.teamList {
-    display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 50px;
-}
-
+.container {
+    background-color: #21232e;
+    min-height: 100vh;
+    color: #ffffff;
+  }
 
 .tables {
   border-collapse: collapse;
@@ -43,6 +45,11 @@
 .tables tbody tr {
   border-bottom: 1px solid #dddddd;
 }
+
+.tables tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
 
 .tables tbody tr.active-row {
   font-weight: bold;

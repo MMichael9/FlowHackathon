@@ -85,3 +85,39 @@ transaction(leagueName: String) {
     }
 }
 `;
+
+export async function joinLeague(leagueId, teamId) {
+    return fcl.mutate({
+      cadence: JOIN_LEAGUE,
+      args: (arg,t) => [arg(leagueId, t.UInt32), arg(teamId, t.UInt32)],
+      payer: fcl.authz,
+      proposer: fcl.authz,
+      authorizations: [fcl.authz],
+      limit: 1000,
+    });
+  }
+
+  const JOIN_LEAGUE = `
+  import NetProfits from 0xNetProfits
+
+transaction(leagueId: UInt32, teamId: UInt32) {
+
+
+    prepare(acct: AuthAccount) {
+
+    }
+
+    execute {
+        
+        // Borrow a reference to the League to be added to
+        let leagueRef = NetProfits.borrowLeague(leagueId: leagueId)
+
+        // Add the specified play ID
+        let success = leagueRef.joinLeague(teamId: teamId)
+        log(success)
+    }
+
+    post {
+    }
+}
+  `

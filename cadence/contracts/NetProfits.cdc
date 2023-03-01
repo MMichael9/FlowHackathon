@@ -14,6 +14,7 @@ pub contract NetProfits {
 
     access(self) let leagueIdByName: {String: UInt32}
     access(self) var leagues: @{UInt32: League}
+    pub var teamPublicData: {UInt32: TeamData}
 
     init() {
         // assign the storage path to /storage/TeamCollection
@@ -24,6 +25,7 @@ pub contract NetProfits {
         self.nextTeamId = 1
         self.leagues <- {}
         self.leagueIdByName = {}
+        self.teamPublicData = {}
 
         self.account.save<@Admin>(<- create Admin(), to: /storage/NetProfitsAdmin)
 
@@ -33,6 +35,18 @@ pub contract NetProfits {
         self.account.link<&{CollectionPublic}>(self.TeamCollectionPublicPath, target: self.TeamCollectionStoragePath)
 
         emit ContractInitialized()
+    }
+
+    pub struct TeamData {
+      pub let id: UInt32
+      pub let name: String
+      pub let players: [String; 5]
+
+      init(teamId: UInt32, name: String, players: [String; 5]) {
+        self.id = teamId
+        self.name = name
+        self.players = players
+      }
     }
 
     // Declare the Team resource type - nothing changed here!
@@ -47,6 +61,8 @@ pub contract NetProfits {
           self.id = NetProfits.nextTeamId
           self.name = name
           self.players = players
+
+          NetProfits.teamPublicData[self.id] = TeamData(teamId: self.id, name: self.name, players: self.players)
 
           NetProfits.nextTeamId = self.id + 1 as UInt32
         }
@@ -121,11 +137,12 @@ pub contract NetProfits {
         return <- create Collection()
     }
 
+    // Publicly accessible League Data
     pub struct LeagueData {
         pub let leagueId: UInt32
         pub let leagueName: String
         pub let createdTime: UFix64
-        pub var members: [String]
+        pub var teamIdList: [UInt32]
         pub var active: Bool
 
         init(leagueId: UInt32) {
@@ -133,7 +150,7 @@ pub contract NetProfits {
                 self.leagueId = leagueId
                 self.leagueName = league.leagueName
                 self.createdTime = league.createdTime
-                self.members = league.members
+                self.teamIdList = league.teamIdList
                 self.active = league.active
             } else {
                panic("league does not exist")
@@ -144,13 +161,12 @@ pub contract NetProfits {
     // League Resource
     //
     //
-    //
+    // 
     pub resource League {
         pub let leagueId: UInt32
         pub let leagueName: String
         pub let createdTime: UFix64
-        pub var members: [String]
-        pub var membersMap: [UInt32]
+        pub var teamIdList: [UInt32]
         pub var active: Bool
 
         init(name: String) {
@@ -161,21 +177,18 @@ pub contract NetProfits {
             self.leagueId = NetProfits.nextLeagueId
             self.leagueName = name
             self.createdTime = getCurrentBlock().timestamp
-            self.members = []
-            self.membersMap = {}
+            self.teamIdList = []
             self.active = true
 
             NetProfits.leagueIdByName[name] = self.leagueId
         }
 
-        pub fun joinLeague(name:String) {
-            // check if name is already in league and if league is active
-            // if no add them to member array, otherwise dont
-            self.members.append(name)
-        }
-
-        pub fun joinLeagueTest(teamId: UInt32) {
-            self.membersMap.append(teamId)
+        pub fun joinLeague(teamId: UInt32): Bool {
+            pre {
+                !self.teamIdList.contains(teamId): "A Team with that Id is already registered!"
+            }
+            self.teamIdList.append(teamId)
+            return true;
         }
     }
 
@@ -209,14 +222,14 @@ pub contract NetProfits {
         return NetProfits.leagueIdByName.keys
     }
 
-    pub fun getMembersInLeague(leagueId: UInt32): [String]? {
-        return NetProfits.leagues[leagueId]?.members
+    pub fun getMembersInLeague(leagueId: UInt32): [UInt32]? {
+      return NetProfits.leagues[leagueId]?.teamIdList
     }
 
 
     // Admin Resource
     // 
-    // Contract owner with access to special functions
+    // Assigned to contract deployer with access to special functions
     pub resource Admin {
 
         pub fun createLeague(name: String): UInt32 {

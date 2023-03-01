@@ -9,12 +9,16 @@ import { getMomentMetadata, getMoments } from "../flow/scripts";
 import { createTeam } from "../flow/transactions"
 import {useEffect, useState} from "react";
 import jsonObj from "../static/players.json"
+import axios from "axios";
 
 export default function Team() {
 
     const { currentUser, logOut, logIn } = useAuth();
     const [Ids, setIds] = useState([]);
     const names = []
+    const imgs = []
+
+    //const [playerImages, setImages] = useState([])
 
     const [team, setTeam] = useState([])
 
@@ -24,7 +28,6 @@ export default function Team() {
     const [modalValue, setModalValue] = useState(null);
   
     const handleClick = (value) => {
-      console.log(value);
       setModalValue(value);
       setShowModal(true);
     };
@@ -57,9 +60,6 @@ export default function Team() {
         return;
       }
 
-      console.log(teamName)
-      console.log(team)
-
       try {
         const txId = await createTeam(teamName, team);
         await fcl.tx(txId).onceSealed();
@@ -81,12 +81,19 @@ export default function Team() {
             //let test = await getMomentMetadata(currentUser.addr, ids[i])
             let test = jsonObj[i].playerName
 
+            // get image
+            // const response = await axios.get(`https://assets.nbatopshot.com/media/${jsonObj[i].nftId}/transparent?width=200&?height=200`, { responseType: 'arraybuffer' });
+            // const imageData = Buffer.from(response.data, 'binary').toString('base64');
+            // console.log(imageData);
+            
             //names.push(test.FullName)
             names.push(test)
+            //imgs.push(imageData)
         }
         console.log(names)
-        setIds(names);
-        //console.log(ids);
+
+        //setImages(imgs)
+        setIds(names)
       } catch (error) {
         console.error(error.message);
       }
