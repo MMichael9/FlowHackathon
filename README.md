@@ -1,3 +1,21 @@
+Net Profits on Flow! Combining the world of fantasy sports with your favourite NFTs!! 
+
+Project for Flow Hackathon 2023 
+
+Testnet Deployed Address: NetProfits -> 0x39b08d733644d9cd (0de6e8fbed97c1c784e070513e4071cde1c83e2014d2dab7cdd3dd201c9d78d5) 
+
+
+To Run, simply npm i in /web folder --> npm run dev --> currently connected to Flow Testnet.
+
+Django server used to fetch player stats --> code can be found in /api folder
+
+Contracts, scripts and transactions can be found in /cadence folder
+
+
+
+
+
+
 ### 👋 Welcome Flow Developer!
 Welcome to your new Flow project. We've created the basic folder structure you will need to develop your project and provided some examples of contracts and transactions you can modify. We've also added some of the most common contracts, transactions and scripts but feel free to just delete what you don't need. 
 
