@@ -1,54 +1,67 @@
 [
     {
       "nftId": 10099712,
-      "playerName": "Luka Doncic"
+      "playerName": "Luka Doncic",
+      "cost": 10
     },
     {
       "nftId": 12056743,
-      "playerName": "Ja Morant"
+      "playerName": "Ja Morant",
+      "cost": 10
     },
     {
       "nftId": 4870675,
-      "playerName": "Bradley Beal"
+      "playerName": "Bradley Beal",
+      "cost": 10
     },
     {
       "nftId": 34561573,
-      "playerName": "Immanuel Quickley"
+      "playerName": "Immanuel Quickley",
+      "cost": 10
     },
     {
       "nftId": 6900442,
-      "playerName": "Brook Lopez"
+      "playerName": "Brook Lopez",
+      "cost": 10
     },
     {
       "nftId": 5748804,
-      "playerName": "James Wiseman"
+      "playerName": "James Wiseman",
+      "cost": 10
     },
     {
       "nftId": 3436840,
-      "playerName": "RJ Barrett"
+      "playerName": "RJ Barrett",
+      "cost": 10
     },
     {
       "nftId": 1086415,
-      "playerName": "Markelle Fultz"
+      "playerName": "Markelle Fultz",
+      "cost": 10
     },
     {
       "nftId": 7138246,
-      "playerName": "Ben Simmons"
+      "playerName": "Ben Simmons",
+      "cost": 10
     },
     {
       "nftId": 1470395,
-      "playerName": "Pascal Siakam"
+      "playerName": "Pascal Siakam",
+      "cost": 10
     },
     {
       "nftId": 5193792,
-      "playerName": "Theo Maledon"
+      "playerName": "Theo Maledon",
+      "cost": 10
     },
     {
       "nftId": 1303379,
-      "playerName": "Marcus Smart"
+      "playerName": "Marcus Smart",
+      "cost": 10
     },
     {
       "nftId": 8964304,
-      "playerName": "Cameron Payne"
+      "playerName": "Cameron Payne",
+      "cost": 10
     }
   ]

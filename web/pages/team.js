@@ -61,14 +61,27 @@ export default function Team() {
       }
 
       try {
-        const txId = await createTeam(teamName, team);
-        await fcl.tx(txId).onceSealed();
-        console.log(txId)
-        alert('Transaction Id: ' + txId + '\n\nTeam Succesfully Created! Go to the View Team tab!')
+        console.log(team)
+
+        const json = {players: team}
+
+        const res = await axios.post('http://127.0.0.1:8000/submitTeam/', json);
+        console.log(res)
+
       } catch (error) {
-        alert("ERROR!")
+        alert("ERROR! YOUR TEAM COSTS TOO MUCH MONEY")
         console.error(error.message)
       }
+
+      // try {
+      //   const txId = await createTeam(teamName, team);
+      //   await fcl.tx(txId).onceSealed();
+      //   console.log(txId)
+      //   alert('Transaction Id: ' + txId + '\n\nTeam Succesfully Created! Go to the View Team tab!')
+      // } catch (error) {
+      //   alert("ERROR!")
+      //   console.error(error.message)
+      // }
     }
     
 
